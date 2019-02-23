@@ -114,6 +114,7 @@ EXPOSE 23000 22122 80
 CMD	sed -i "s/\$NGINX_PORT/$NGINX_PORT/" $NGINX_PATH/conf/nginx.conf ; \  
     sed -i "s/\$FASTDFS_TRACKE_PORT/$FASTDFS_TRACKE_PORT/" $FASTDFS_PATH/conf/client.conf ; \ 
     sed -i "s/\$FASTDFS_TRACKE_PORT/$FASTDFS_TRACKE_PORT/" $FASTDFS_PATH/conf/tracker.conf ; \  
+    sed -i "s/\$FASTDFS_TRACKE_PORT/$FASTDFS_TRACKE_PORT/" $FASTDFS_PATH/conf/storage.conf ; \
     sed -i "s/\$FASTDFS_STORAGE_PORT/$FASTDFS_STORAGE_PORT/" $FASTDFS_PATH/conf/storage.conf ; \
 	nginx ; \
 	if test $TRACKER_ENABLE -eq 1 ; then fdfs_trackerd $FASTDFS_PATH/conf/tracker.conf ;  fi ; \
