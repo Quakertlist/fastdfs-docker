@@ -8,6 +8,12 @@ ENV TRACKER_ENABLE 0
 #default nginx port
 ENV NGINX_PORT 80
 
+#default fastdfs tracker port
+ENV FASTDFS_TRACKE_PORT 22122
+
+#default fastdfs storage port
+ENV FASTDFS_STORAGE_PORT 23000
+
 #fastdfs cofnig git
 ENV FASTDFS_CONFIG_GIT=https://github.com/mypjb/fastdfs-docker.git
 
@@ -105,7 +111,10 @@ RUN mkdir -p /storage/fastdfs
 
 EXPOSE 23000 22122 80
        
-CMD	sed -i "s/\$NGINX_PORT/$NGINX_PORT/" $NGINX_PATH/conf/nginx.conf ; \
+CMD	sed -i "s/\$NGINX_PORT/$NGINX_PORT/" $NGINX_PATH/conf/nginx.conf ; \  
+    sed -i "s/\$FASTDFS_TRACKE_PORT/$FASTDFS_TRACKE_PORT/" $FASTDFS_PATH/conf/client.conf ; \ 
+    sed -i "s/\$FASTDFS_TRACKE_PORT/$FASTDFS_TRACKE_PORT/" $FASTDFS_PATH/conf/tracker.conf ; \  
+    sed -i "s/\$FASTDFS_STORAGE_PORT/$FASTDFS_STORAGE_PORT/" $FASTDFS_PATH/conf/storage.conf ; \
 	nginx ; \
 	if test $TRACKER_ENABLE -eq 1 ; then fdfs_trackerd $FASTDFS_PATH/conf/tracker.conf ;  fi ; \
 	fdfs_storaged $FASTDFS_PATH/conf/storage.conf  ; \
