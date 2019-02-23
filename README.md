@@ -24,19 +24,17 @@ nginx开启监听端口，默认为80
 ## FASTDFS_STORAGE_PORT
 开启storage的监听端口，默认23000
 
-## GROUP_NAME 
-storage的分组名称，默认是group1
 
 # 使用示例
 ## 以下假设需要在192.168.1.100机器上开启
 ## 1.仅开启storage
 ```sh
 # 开启分组名为group1的storage
-docker run --add-host fastdfs.net:192.168.1.100 --name fastdfs --net=host-e NGINX_PORT=8801 -e FASTDFS_STORAGE_PORT=23000 -e GROUP_NAME=group1 -v $PWD/fastdfs:/storage/fastdfs -it quakertlist/fastdfs
+docker run --add-host fastdfs.net:192.168.1.100 --name fastdfs --net=host-e NGINX_PORT=8801 -e FASTDFS_STORAGE_PORT=23000 -v $PWD/fastdfs:/storage/fastdfs -it quakertlist/fastdfs
 ```
 
 ## 2.开启storage 和tracker
 ```sh
 # 开启tracker和分组名为group1的storage
-docker run --add-host fastdfs.net:192.168.1.100 --name fastdfs --net=host -e NGINX_PORT=8801 -e TRACKER_ENABLE=1 -e FASTDFS_TRACKE_PORT=22122 -e FASTDFS_STORAGE_PORT=23000 -e GROUP_NAME=group1 -v $PWD/fastdfs:/storage/fastdfs -it quakertlist/fastdfs
+docker run --add-host fastdfs.net:192.168.1.100 --name fastdfs --net=host -e NGINX_PORT=8801 -e TRACKER_ENABLE=1 -e FASTDFS_TRACKE_PORT=22122 -e FASTDFS_STORAGE_PORT=23000 -v $PWD/fastdfs:/storage/fastdfs -it quakertlist/fastdfs
 ```

@@ -14,9 +14,6 @@ ENV FASTDFS_TRACKE_PORT 22122
 #default fastdfs storage port
 ENV FASTDFS_STORAGE_PORT 23000
 
-#default group name
-ENV GROUP_NAME group1
-
 #fastdfs cofnig git
 ENV FASTDFS_CONFIG_GIT=https://github.com/Quakertlist/fastdfs-docker.git
 
@@ -89,7 +86,7 @@ RUN echo "pull fastdfs config " \
         && git clone $FASTDFS_NGINX_GIT	$NGINX_PATH/modules/fastdfs \
 	&& cp fastdfs_git/fastdfs-nginx-module/* $NGINX_PATH/modules/fastdfs/src \
 	&& mkdir -p $NGINX_PATH/conf \
-	&& mkdir -p /storage/nginx/$GROUP_NAME \
+	&& mkdir -p /storage/nginx/picture \
 	&& cp fastdfs_git/nginx_conf/* $NGINX_PATH/conf \
  	&& rm -rf fastdfs_git
 
@@ -115,14 +112,10 @@ RUN mkdir -p /storage/fastdfs
 EXPOSE 23000 22122 80
        
 CMD	sed -i "s/\$NGINX_PORT/$NGINX_PORT/" $NGINX_PATH/conf/nginx.conf ; \  
-    sed -i "s/\$GROUP_NAME/$GROUP_NAME/" $NGINX_PATH/conf/nginx.conf ; \ 
     sed -i "s/\$FASTDFS_TRACKE_PORT/$FASTDFS_TRACKE_PORT/" $FASTDFS_PATH/conf/client.conf ; \ 
-    sed -i "s/\$GROUP_NAME/$GROUP_NAME/" $FASTDFS_PATH/conf/client.conf ; \ 
     sed -i "s/\$FASTDFS_TRACKE_PORT/$FASTDFS_TRACKE_PORT/" $FASTDFS_PATH/conf/tracker.conf ; \  
-    sed -i "s/\$GROUP_NAME/$GROUP_NAME/" $FASTDFS_PATH/conf/tracker.conf ; \ 
     sed -i "s/\$FASTDFS_TRACKE_PORT/$FASTDFS_TRACKE_PORT/" $FASTDFS_PATH/conf/storage.conf ; \
     sed -i "s/\$FASTDFS_STORAGE_PORT/$FASTDFS_STORAGE_PORT/" $FASTDFS_PATH/conf/storage.conf ; \
-    sed -i "s/\$GROUP_NAME/$GROUP_NAME/" $FASTDFS_PATH/conf/storage.conf ; \
 	nginx ; \
 	if test $TRACKER_ENABLE -eq 1 ; then fdfs_trackerd $FASTDFS_PATH/conf/tracker.conf ;  fi ; \
 	fdfs_storaged $FASTDFS_PATH/conf/storage.conf  ; \
