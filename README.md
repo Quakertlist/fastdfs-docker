@@ -1,3 +1,6 @@
+# build
+docker build -t quakert/fastdfs .
+
 # fastdfs-docker
 this is a fastdfs docker project
 
