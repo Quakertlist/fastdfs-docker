@@ -15,13 +15,13 @@ ENV FASTDFS_TRACKE_PORT 22122
 ENV FASTDFS_STORAGE_PORT 23000
 
 #fastdfs cofnig git
-ENV FASTDFS_CONFIG_GIT=https://github.com/mypjb/fastdfs-docker.git
+ENV FASTDFS_CONFIG_GIT=https://github.com/Quakertlist/fastdfs-docker.git
 
 #fastdfs nginx module git
 ENV FASTDFS_NGINX_GIT=https://github.com/happyfish100/fastdfs-nginx-module.git
 
 #fastdfs url
-ENV FASTDFS_URL https://github.com/happyfish100/fastdfs/archive/V5.10.tar.gz
+ENV FASTDFS_URL https://github.com/happyfish100/fastdfs/archive/V5.11.tar.gz
 
 # fastdfs lib
 ENV FASTDFS_LIBCOMMON https://github.com/happyfish100/libfastcommon/archive/V1.0.35.tar.gz
