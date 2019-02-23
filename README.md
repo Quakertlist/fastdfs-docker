@@ -1,21 +1,42 @@
-# build
-docker build -t quakert/fastdfs .
 
-# fastdfs-docker
-this is a fastdfs docker project
+# 构建镜像步骤
+## 检出代码
+```
+git clone https://github.com/Quakertlist/fastdfs-docker.git
+```
 
-# tracker defalut port
-12050  FASTDFS_TRACKE_PORT
-# storage default port
-12041  FASTDFS_STORAGE_PORT
-# start storage:
-docker run --add-host fastdfs.net:10.10.5.170 --name fastdfs --net=host -v $(pwd):/storage/fastdfs -it mypjb/fastdfs
-docker run --add-host fastdfs.net:10.10.5.170 --name fastdfs --net=host -e FASTDFS_STORAGE_PORT=23000 -v $(pwd):/storage/fastdfs -it mypjb/fastdfs
+## 进入代码目录并编译
+```
+cd fastdfs-docker
+docker build -t quakertlist/fastdfs .
+```
 
-# simultaneously started:
-docker run --add-host fastdfs.net:10.10.5.170 --name fastdfs --net=host -e TRACKER_ENABLE=1 -v $(pwd):/storage/fastdfs -it mypjb/fastdfs
-docker run --add-host fastdfs.net:10.10.5.170 --name fastdfs --net=host -e TRACKER_ENABLE=1 -e FASTDFS_STORAGE_PORT=23000 -e FASTDFS_TRACKE_PORT=22122  -v $(pwd):/storage/fastdfs -it mypjb/fastdfs
+# 环境变量介绍
+## TRACKER_ENABLE
+是否开启tracker标记，1为开启，默认为0
 
+## NGINX_PORT
+nginx开启监听端口，默认为80
 
-# if you want to define listen nginx port Atendofstream NGINX_PORT replace:
-docker run --add-host fastdfs.net:10.10.5.170 --name fastdfs --net=host -e TRACKER_ENABLE=1 -e NGINX_PORT=81 -v $(pwd):/storage/fastdfs -it mypjb/fastdfs
+## FASTDFS_TRACKE_PORT
+开启tracker时的服务端口，默认22122
+
+## FASTDFS_STORAGE_PORT
+开启storage的监听端口，默认23000
+
+## GROUP_NAME 
+storage的分组名称，默认是group1
+
+# 使用示例
+## 以下假设需要在192.168.1.100机器上开启
+## 1.仅开启storage
+```sh
+# 开启分组名为group1的storage
+docker run --add-host fastdfs.net:192.168.1.100 --name fastdfs --net=host-e NGINX_PORT=8801 -e FASTDFS_STORAGE_PORT=23000 -e GROUP_NAME=group1 -v $PWD/fastdfs:/storage/fastdfs -it quakertlist/fastdfs
+```
+
+## 2.开启storage 和tracker
+```sh
+# 开启tracker和分组名为group1的storage
+docker run --add-host fastdfs.net:192.168.1.100 --name fastdfs --net=host -e NGINX_PORT=8801 -e TRACKER_ENABLE=1 -e FASTDFS_TRACKE_PORT=22122 -e FASTDFS_STORAGE_PORT=23000 -e GROUP_NAME=group1 -v $PWD/fastdfs:/storage/fastdfs -it quakertlist/fastdfs
+```
